@@ -84,14 +84,13 @@ namespace NobleMuffins.StagedComputationKit {
 					jobState.elementEnumerator = job.elements.GetEnumerator();
 				}
 				var elementEnumerator = jobState.elementEnumerator;
-				
-				bool stillHasWorkToDo = elementEnumerator.MoveNext();
-				
-				while(stillHasWorkToDo && (stopwatch.ElapsedMilliseconds < millisecondsPerFrame))
+
+				bool stillHasWorkToDo;
+
+				while((stopwatch.ElapsedMilliseconds < millisecondsPerFrame) && (stillHasWorkToDo = elementEnumerator.MoveNext()))
 				{
 					var element = elementEnumerator.Current;
 					job.function(element);
-					stillHasWorkToDo = elementEnumerator.MoveNext();
 				}
 
 				stopwatch.Stop();
